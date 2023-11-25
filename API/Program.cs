@@ -3,6 +3,8 @@ using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//test
+
 // Add services to the container.
 
 builder.Services.AddControllers();
