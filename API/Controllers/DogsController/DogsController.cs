@@ -1,4 +1,5 @@
 ﻿using Application.Commands.Dogs;
+using Application.Commands.Dogs.DeleteDog;
 using Application.Commands.Dogs.UpdateDog;
 using Application.Dtos;
 using Application.Queries.Dogs.GetAll;
@@ -54,6 +55,23 @@ namespace API.Controllers.DogsController
         }
 
         // IMPLEMENT DELETE !!!
+
+        [HttpDelete]
+        [Route("deleteDog/{dogId}")]
+        public async Task<IActionResult> DeleteDog(Guid dogId)
+        {
+            // Anropa Mediator för att skicka en DeleteDogCommand med det aktuella hundens Id
+            var result = await _mediator.Send(new DeleteDogCommand(dogId));
+
+            // Resultatet kan vara true om borttagningen var framgångsrik, annars false
+            if (result)
+            {
+                return Ok($"Dog with Id {dogId} has been successfully deleted.");
+            }
+
+            // Om result är false, returnera en lämplig NotFound eller BadRequest
+            return NotFound($"Dog with Id {dogId} not found or couldn't be deleted.");
+        }
 
     }
 }
