@@ -18,7 +18,7 @@ namespace Infrastructure.Database
             new Dog { Id = new Guid("12345678-1234-5678-1234-567812345678"), Name = "TestDogForUnitTests"}
         };
 
-        // Inom Infrastruktur.Database.MockDatabase
+        //detta tar bort och return true om den lyckades annars false
         public bool DeleteDog(Guid dogId)
         {
             var dogToRemove = allDogs.FirstOrDefault(dog => dog.Id == dogId);
@@ -26,10 +26,10 @@ namespace Infrastructure.Database
             if (dogToRemove != null)
             {
                 allDogs.Remove(dogToRemove);
-                return true; // Borttagningen var framgångsrik
+                return true; 
             }
 
-            return false; // Hunden med det angivna Id:et hittades inte
+            return false; 
         }
 
     }
