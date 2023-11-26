@@ -1,4 +1,5 @@
-﻿using Application.Queries.Dogs.GetById;
+﻿using Application.Commands.Dogs.DeleteDog;
+using Application.Queries.Dogs.GetById;
 using Infrastructure.Database;
 
 namespace Test.DogTests.QueryTest
@@ -47,5 +48,25 @@ namespace Test.DogTests.QueryTest
             // Assert
             Assert.IsNull(result);
         }
+
+        [Test]
+        public async Task Handle_ValidId_DeletesCorrectDog()
+        {
+            // Arrange
+            var dogIdToDelete = new Guid("87654321-4321-8765-4321-876543210987");
+
+            // Act
+            var result = await new DeleteDogCommandHandler(_mockDatabase)
+                .Handle(new DeleteDogCommand(dogIdToDelete), CancellationToken.None);
+
+            // Assert
+            Assert.IsTrue(result, "Expected a successful deletion.");
+
+            // Check if the dog with the specified Id is no longer in the database
+            Assert.IsNull(_mockDatabase.Dogs.FirstOrDefault(dog => dog.Id == dogIdToDelete),
+                "The dog should no longer exist in the database after deletion.");
+        }
+
+
     }
 }
