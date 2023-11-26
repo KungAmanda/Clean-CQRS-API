@@ -62,7 +62,8 @@ namespace Test.DogTests.QueryTest
             // Assert
             Assert.IsTrue(result, "Expected a successful deletion.");
 
-            // Check if the dog with the specified Id is no longer in the database
+
+            //kollar om hunden inte finns i db
             Assert.IsNull(_mockDatabase.Dogs.FirstOrDefault(dog => dog.Id == dogIdToDelete),
                 "The dog should no longer exist in the database after deletion.");
         }
