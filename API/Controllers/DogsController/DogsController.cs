@@ -54,7 +54,7 @@ namespace API.Controllers.DogsController
             return Ok(await _mediator.Send(new UpdateDogByIdCommand(updatedDog, updatedDogId)));
         }
 
-        // IMPLEMENT DELETE !!!
+        
 
         [HttpDelete]
         [Route("deleteDog/{dogId}")]
@@ -63,13 +63,13 @@ namespace API.Controllers.DogsController
             // Anropa Mediator för att skicka en DeleteDogCommand med det aktuella hundens Id
             var result = await _mediator.Send(new DeleteDogCommand(dogId));
 
-            // Resultatet kan vara true om borttagningen var framgångsrik, annars false
+            // Resultatet kan vara true om delete gick bra, annars false
             if (result)
             {
                 return Ok($"Dog with Id {dogId} has been successfully deleted.");
             }
 
-            // Om result är false, returnera en lämplig NotFound eller BadRequest
+            // Om result är false returnera  NotFound eller nått
             return NotFound($"Dog with Id {dogId} not found or couldn't be deleted.");
         }
 

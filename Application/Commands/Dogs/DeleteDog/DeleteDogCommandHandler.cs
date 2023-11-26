@@ -19,8 +19,7 @@ namespace Application.Commands.Dogs.DeleteDog
 
         public Task<bool> Handle(DeleteDogCommand request, CancellationToken cancellationToken)
         {
-            // Här kan du implementera logik för att ta bort hunden från databasen
-            // Returnera true om borttagningen är framgångsrik, annars false
+            
             var success = _mockDatabase.DeleteDog(request.DogId);
             return Task.FromResult(success);
         }

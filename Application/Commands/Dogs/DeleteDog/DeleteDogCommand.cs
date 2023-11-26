@@ -5,12 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using MediatR;
 
-/*namespace Application.Commands.Dogs.DeleteDog
-{
-    internal class DeleteDogCommand
-    {
-    }
-}*/
 
 namespace Application.Commands.Dogs.DeleteDog
 {
