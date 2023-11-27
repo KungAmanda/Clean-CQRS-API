@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Infrastructure.Database;
+﻿using Infrastructure.Database;
 using MediatR;
 
 namespace Application.Commands.Dogs.DeleteDog
@@ -19,7 +14,6 @@ namespace Application.Commands.Dogs.DeleteDog
 
         public Task<bool> Handle(DeleteDogCommand request, CancellationToken cancellationToken)
         {
-            
             var success = _mockDatabase.DeleteDog(request.DogId);
             return Task.FromResult(success);
         }
