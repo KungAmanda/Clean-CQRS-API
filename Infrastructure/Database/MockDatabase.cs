@@ -17,8 +17,6 @@ namespace Infrastructure.Database
             new Dog { Id = Guid.NewGuid(), Name = "Alfred"},
             new Dog { Id = new Guid("12345678-1234-5678-1234-567812345678"), Name = "TestDogForUnitTests"},
             new Dog { Id = new Guid("87654321-4321-8765-4321-876543210987"), Name = "AnotherTestDogForUnitTests"}
-
-
         };
 
         //detta tar bort och return true om den lyckades annars false
@@ -29,10 +27,10 @@ namespace Infrastructure.Database
             if (dogToRemove != null)
             {
                 allDogs.Remove(dogToRemove);
-                return true; 
+                return true;
             }
 
-            return false; 
+            return false;
         }
 
     }
