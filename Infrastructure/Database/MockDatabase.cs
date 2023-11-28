@@ -35,23 +35,5 @@ namespace Infrastructure.Database
             new Cat { Id = new Guid("87654321-4321-8765-4321-876543210987"), Name = "AnotherTestDogForUnitTests"}
         };
 
-        ////detta tar bort och return true om den lyckades annars false
-        public bool DeleteDog(Guid dogId)
-        {
-            var dogToRemove = allDogs.FirstOrDefault(dog => dog.Id == dogId);
-
-            if (dogToRemove != null)
-            {
-                allDogs.Remove(dogToRemove);
-                return true;
-            }
-
-            return false;
-        }
-
-        public MockDatabase Clone()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
