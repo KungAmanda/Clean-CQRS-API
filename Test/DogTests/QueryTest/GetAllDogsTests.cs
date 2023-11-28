@@ -40,7 +40,7 @@ namespace Test.DogTests.QueryTest
             Assert.That(result.Count, Is.EqualTo(_mockDatabase.Dogs.Count));
         }
 
-       
+
 
 
     }

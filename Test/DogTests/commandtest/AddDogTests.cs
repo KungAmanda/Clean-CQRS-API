@@ -49,10 +49,10 @@ namespace Test.DogTests.CommandTest
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-           
+
 
             Assert.IsNotNull(result);
-           
+
         }
 
     }
