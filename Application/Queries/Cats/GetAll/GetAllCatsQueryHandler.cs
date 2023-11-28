@@ -24,5 +24,5 @@ namespace Application.Queries.Cats.GetAll
             return Task.FromResult(allCatsFromMockDatabase);
         }
     }
-    
+
 }

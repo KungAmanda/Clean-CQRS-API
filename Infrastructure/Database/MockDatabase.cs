@@ -13,8 +13,8 @@ namespace Infrastructure.Database
 
         public List<Cat> Cats
         {
-            get { return allCats; } 
-            set { allCats = value;}
+            get { return allCats; }
+            set { allCats = value; }
         }
 
         private static List<Dog> allDogs = new()

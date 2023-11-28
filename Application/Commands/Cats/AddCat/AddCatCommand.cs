@@ -18,6 +18,6 @@ namespace Application.Commands.Cats.AddCat
 
         public CatDto NewCat { get; }
         public CatDto Cat { get; set; }
-    
+
     }
 }
