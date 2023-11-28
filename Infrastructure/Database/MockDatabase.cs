@@ -33,5 +33,9 @@ namespace Infrastructure.Database
             return false;
         }
 
+        public MockDatabase Clone()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

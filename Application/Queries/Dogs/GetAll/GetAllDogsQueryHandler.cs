@@ -1,11 +1,12 @@
 ﻿using Application.Queries.Dogs.GetAll;
+using Application.Queries.Dogs.GetById;
 using Domain.Models;
 using Infrastructure.Database;
 using MediatR;
 
 namespace Application.Queries.Dogs
 {
-    internal sealed class GetAllDogsQueryHandler : IRequestHandler<GetAllDogsQuery, List<Dog>>
+    public class GetAllDogsQueryHandler : IRequestHandler<GetAllDogsQuery, List<Dog>>
     {
         private readonly MockDatabase _mockDatabase;
 
@@ -17,6 +18,11 @@ namespace Application.Queries.Dogs
         {
             List<Dog> allDogsFromMockDatabase = _mockDatabase.Dogs;
             return Task.FromResult(allDogsFromMockDatabase);
+        }
+
+        public static implicit operator GetAllDogsQueryHandler(GetDogByIdQueryHandler v)
+        {
+            throw new NotImplementedException();
         }
     }
 }
