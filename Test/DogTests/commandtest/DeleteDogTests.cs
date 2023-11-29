@@ -30,7 +30,7 @@ namespace Test.DogTests.CommandTest
 
             _mediatorMock = new Mock<IMediator>();
 
-            // Konfigurera IMediator att returnera null när DeleteDogByIdCommand skickas
+            // Konfigurera IMediator att returnera null när DeleteDogCommand skickas
             _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteDogCommand>(), default(CancellationToken)))
              .Returns(Task.FromResult((Dog)null));
             // Initialize the handler and mock database before each test
