@@ -1,14 +1,43 @@
-﻿using Domain.Models;
+﻿//using Domain.Models;
+//using Infrastructure.Database;
+//using MediatR;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+
+//namespace Application.Commands.Cats.UpdateCat
+//{
+//    public class UpdateCatByIdCommandHandler : IRequestHandler<UpdateCatByIdCommand, Cat>
+//    {
+//        private readonly MockDatabase _mockDatabase;
+
+//        public UpdateCatByIdCommandHandler(MockDatabase mockDatabase)
+//        {
+//            _mockDatabase = mockDatabase;
+//        }
+//        public Task<Cat> Handle(UpdateCatByIdCommand request, CancellationToken cancellationToken)
+//        {
+//            Cat catToUpdate = _mockDatabase.Cats.FirstOrDefault(cat => cat.Id == request.Id)!;
+
+//            catToUpdate.Name = request.UpdatedCat.Name;
+
+//            return Task.FromResult(catToUpdate);
+//        }
+//    }
+//}
+using Domain.Models;
 using Infrastructure.Database;
 using MediatR;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.Commands.Cats.UpdateCat
 {
+    // UpdateCatByIdCommandHandler.cs
     public class UpdateCatByIdCommandHandler : IRequestHandler<UpdateCatByIdCommand, Cat>
     {
         private readonly MockDatabase _mockDatabase;
@@ -17,13 +46,24 @@ namespace Application.Commands.Cats.UpdateCat
         {
             _mockDatabase = mockDatabase;
         }
+
         public Task<Cat> Handle(UpdateCatByIdCommand request, CancellationToken cancellationToken)
         {
-            Cat catToUpdate = _mockDatabase.Cats.FirstOrDefault(cat => cat.Id == request.Id)!;
+            Cat catToUpdate = _mockDatabase.Cats.FirstOrDefault(cat => cat.Id == request.Id);
 
-            catToUpdate.Name = request.UpdatedCat.Name;
+            if (catToUpdate != null)
+            {
+                catToUpdate.Name = request.UpdatedCat.Name;
+
+                // Uppdatera LikesToPlay om det finns i kommandot
+                if (request.LikesToPlay.HasValue)
+                {
+                    catToUpdate.LikesToPlay = request.LikesToPlay.Value;
+                }
+            }
 
             return Task.FromResult(catToUpdate);
         }
     }
+
 }
