@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Models;
 using MediatR;
 
 
 namespace Application.Commands.Dogs.DeleteDog
 {
-    public class DeleteDogCommand : IRequest<bool>
+    public class DeleteDogCommand : IRequest<Dog>
     {
-        public Guid DogId { get; }
-
-        public DeleteDogCommand(Guid dogId)
+        public DeleteDogCommand(Guid id)
         {
-            DogId = dogId;
+            Id = id;
         }
+        public Guid Id { get; set; }
     }
 }
 

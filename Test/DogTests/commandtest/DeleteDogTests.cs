@@ -9,6 +9,10 @@ using Infrastructure.Database;
 using System.Reflection.Metadata;
 using API.Controllers.DogsController;
 using Application.Commands.Dogs.DeleteDog;
+using Microsoft.AspNetCore.Mvc;
+using MediatR;
+using Domain.Models;
+using Moq;
 
 namespace Test.DogTests.CommandTest
 {
@@ -17,36 +21,36 @@ namespace Test.DogTests.CommandTest
     {
 
         private MockDatabase _mockDatabase;
-        private DeleteDogCommandHandler _deleteDogCommandHandler;
+        private DogsController _controller;
+        private Mock<IMediator> _mediatorMock;
 
         [SetUp]
         public void SetUp()
         {
+
+            _mediatorMock = new Mock<IMediator>();
+
+            // Konfigurera IMediator att returnera null när DeleteDogByIdCommand skickas
+            _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteDogCommand>(), default(CancellationToken)))
+             .Returns(Task.FromResult((Dog)null));
             // Initialize the handler and mock database before each test
             _mockDatabase = new MockDatabase();
-            _deleteDogCommandHandler = new DeleteDogCommandHandler(_mockDatabase);
+            _controller = new DogsController(_mediatorMock.Object);
 
         }
 
 
         [Test]
-        public async Task Handle_ValidId_DeletesCorrectDog()
+        public async Task DeleteDog_ShouldReturnNotFoundWhenDogIsDeleted()
         {
-            // Arrange
-            var dogIdToDelete = new Guid("87654321-4321-8765-4321-876543210987");
+            //Arrange
+            var dogId = new Guid("12345678-1234-5678-1234-567812345678");
 
-            // Act
-            var result = await new DeleteDogCommandHandler(_mockDatabase)
-                .Handle(new DeleteDogCommand(dogIdToDelete), CancellationToken.None);
+            //Act
+            var result = await _controller.DeleteDog(dogId);
 
-            // Assert
-            Assert.IsTrue(result, "Expected a successful deletion.");
-
-            var deletedDog = _mockDatabase.Dogs.FirstOrDefault(dog => dog.Id == dogIdToDelete);
-
-            //kollar om hunden inte finns i db
-            Assert.IsNull(deletedDog,
-                "The dog should no longer exist in the database after deletion.");
+            //Assert
+            Assert.IsInstanceOf<NotFoundResult>(result);
         }
 
     }

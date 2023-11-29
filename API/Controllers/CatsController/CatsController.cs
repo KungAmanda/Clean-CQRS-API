@@ -64,7 +64,7 @@ namespace API.Controllers.CatsController
             var cat = await _mediator.Send(new DeleteCatByIdCommand(id));
             if (cat != null)
             {
-                return NoContent();
+                return Ok($"Cat with Id {id} has been successfully deleted.");
             }
             return NotFound();
 
