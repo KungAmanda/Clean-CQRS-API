@@ -11,13 +11,15 @@ namespace Application.Commands.Birds.UpdateBird
 {
     public class UpdateBirdByIdCommand : IRequest<Bird>
     {
-        public UpdateBirdByIdCommand(BirdDto updatedBird, Guid id)
+        public UpdateBirdByIdCommand(BirdDto updatedBird, Guid id, bool canFly)
         {
             UpdatedBird = updatedBird;
             Id = id;
+            CanFly = canFly;
         }
 
         public BirdDto UpdatedBird { get; }
         public Guid Id { get; }
+        public bool CanFly { get; }
     }
 }

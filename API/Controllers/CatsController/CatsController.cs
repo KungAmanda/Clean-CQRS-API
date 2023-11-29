@@ -49,13 +49,15 @@ namespace API.Controllers.CatsController
             return Ok(await _mediator.Send(new AddCatCommand(newCat)));
 
         }
-        //Update a specific Cat
+
         [HttpPut]
         [Route("updateCat/{updateCatId}")]
         public async Task<IActionResult> UpdateCat([FromBody] CatDto updatedCat, Guid updatedCatId)
         {
-            return Ok(await _mediator.Send(new UpdateCatByIdCommand(updatedCat, updatedCatId)));
+
+            return Ok(await _mediator.Send(new UpdateCatByIdCommand(updatedCat, updatedCatId, updatedCat.LikesToPlay)));
         }
+
 
         [HttpDelete("{id}")]
 
