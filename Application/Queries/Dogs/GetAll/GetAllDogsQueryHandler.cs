@@ -20,9 +20,9 @@ namespace Application.Queries.Dogs
             return Task.FromResult(allDogsFromMockDatabase);
         }
 
-        public static implicit operator GetAllDogsQueryHandler(GetDogByIdQueryHandler v)
-        {
-            throw new NotImplementedException();
-        }
+        //public static implicit operator GetAllDogsQueryHandler(GetDogByIdQueryHandler v)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
