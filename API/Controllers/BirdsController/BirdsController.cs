@@ -50,10 +50,12 @@ namespace API.Controllers.BirdsController
         //Update a specific Bird
         [HttpPut]
         [Route("updateBird/{updateBirdId}")]
-        public async Task<IActionResult> UpdateBird([FromBody] BirdDto updatedBird, Guid updatedBirdId)
+        public async Task<IActionResult> UpdateBird([FromBody] BirdDto updatedBird, Guid updateBirdId)
         {
-            return Ok(await _mediator.Send(new UpdateBirdByIdCommand(updatedBird, updatedBirdId)));
+            return Ok(await _mediator.Send(new UpdateBirdByIdCommand(updatedBird, updateBirdId, updatedBird.CanFly)));
         }
+
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBirdById(Guid id)
