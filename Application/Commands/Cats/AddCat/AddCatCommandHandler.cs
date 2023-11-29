@@ -1,4 +1,4 @@
-﻿using Application.Commands.Dogs;
+﻿using Application.Commands.Cats;
 using Domain.Models;
 using Infrastructure.Database;
 using MediatR;
