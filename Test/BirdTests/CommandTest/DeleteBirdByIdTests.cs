@@ -1,11 +1,7 @@
-﻿using API.Controllers.BirdsController;
-using API.Controllers.CatsController;
-using Application.Commands.Birds.DeleteBird;
+﻿using Application.Commands.Birds.DeleteBird;
 using Domain.Models;
 using Infrastructure.Database;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
 using NUnit.Framework;
 using System;
 using System.Threading;
@@ -14,36 +10,31 @@ using System.Threading.Tasks;
 namespace Test.BirdTests.CommandTest
 {
     [TestFixture]
-    public class DeleteBirdByIdTests
+    public class DeleteBirdByIdTest
     {
+        private DeleteBirdByIdCommandHandler _handler;
         private MockDatabase _mockDatabase;
-        private BirdsController _controller;
-        private Mock<IMediator> _mediatorMock;
 
         [SetUp]
-        public void SetUp()
+        public void Setup()
         {
-            _mediatorMock = new Mock<IMediator>();
-
-            // Konfigurera IMediator att returnera null när DeleteBirdCommand skickas
-            _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteBirdByIdCommand>(), default(CancellationToken)))
-             .Returns(Task.FromResult((Bird)null));
-            // Initialize the handler and mock database before each test
             _mockDatabase = new MockDatabase();
-            _controller = new BirdsController(_mediatorMock.Object);
+            _handler = new DeleteBirdByIdCommandHandler(_mockDatabase);
         }
 
         [Test]
-        public async Task DeleteBird_ShouldReturnNotFoundWhenBirdIsDeleted()
+        public async Task DeleteBirdById_ShouldRemoveBirdIfExistingBirdIsDeleted()
         {
             // Arrange
-            var birdId = new Guid("12345678-1234-5678-1234-567812345678");
+            var existingBirdId = new Guid("87654321-4321-8765-4321-876543210987");
+            var deleteCommand = new DeleteBirdByIdCommand(existingBirdId);
 
             // Act
-            var result = await _controller.DeleteBirdById(birdId);
+            var result = await _handler.Handle(deleteCommand, new CancellationToken());
 
             // Assert
-            Assert.IsInstanceOf<NotFoundResult>(result);
+            var birdExistsAfterDeletion = _mockDatabase.Birds.Any(b => b.Id == existingBirdId);
+            Assert.IsFalse(birdExistsAfterDeletion, "Bird should be deleted from the database");
         }
     }
 }

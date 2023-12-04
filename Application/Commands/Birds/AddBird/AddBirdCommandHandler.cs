@@ -1,13 +1,6 @@
-﻿using Application.Commands.Birds;  // Observera ändringen här
-using Domain.Models;
+﻿using Domain.Models;
 using Infrastructure.Database;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Application.Commands.Birds.AddBird
 {
@@ -19,7 +12,6 @@ namespace Application.Commands.Birds.AddBird
         {
             _mockDatabase = mockDatabase;
         }
-
         public Task<Bird> Handle(AddBirdCommand request, CancellationToken cancellationToken)
         {
             Bird birdToCreate = new()

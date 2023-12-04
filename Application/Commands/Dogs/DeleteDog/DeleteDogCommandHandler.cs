@@ -4,21 +4,30 @@ using MediatR;
 
 namespace Application.Commands.Dogs.DeleteDog
 {
-    public class DeleteDogCommandHandler : IRequestHandler<DeleteDogCommand, Dog>
+    public class DeleteDogByIdCommandHandler : IRequestHandler<DeleteDogByIdCommand, Dog>
     {
         private readonly MockDatabase _mockDatabase;
 
-        public DeleteDogCommandHandler(MockDatabase mockdatabase)
+        public DeleteDogByIdCommandHandler(MockDatabase mockdatabase)
         {
             _mockDatabase = mockdatabase;
         }
 
-        public Task<Dog> Handle(DeleteDogCommand request, CancellationToken cancellationToken)
+        public Task<Dog> Handle(DeleteDogByIdCommand request, CancellationToken cancellationToken)
         {
-            // Hitta hunden att ta bort från databasen
+
             var dogToDelete = _mockDatabase.Dogs.FirstOrDefault(dog => dog.Id == request.Id);
 
-            _mockDatabase.Dogs.Remove(dogToDelete);
+            if (dogToDelete != null)
+            {
+                _mockDatabase.Dogs.Remove(dogToDelete);
+            }
+            else
+            {
+
+                throw new InvalidOperationException("No dog with the given ID was found.");
+            }
+
 
             return Task.FromResult(dogToDelete);
 
@@ -26,5 +35,4 @@ namespace Application.Commands.Dogs.DeleteDog
 
 
     }
-
 }

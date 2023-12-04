@@ -51,26 +51,29 @@ namespace API.Controllers.CatsController
         }
 
         [HttpPut]
-        [Route("updateCat/{updateCatId}")]
+        [Route("updateCat/{updatedCatId}")]
         public async Task<IActionResult> UpdateCat([FromBody] CatDto updatedCat, Guid updatedCatId)
         {
 
-            return Ok(await _mediator.Send(new UpdateCatByIdCommand(updatedCat, updatedCatId, updatedCat.LikesToPlay)));
+            return Ok(await _mediator.Send(new UpdateCatByIdCommand(updatedCat, updatedCatId)));
         }
 
 
-        [HttpDelete("{id}")]
-
-        public async Task<IActionResult> DeleteCatById(Guid id)
+        [HttpDelete]
+        [Route("deletecat/{Id}")]
+        public async Task<IActionResult> DeleteCat(Guid Id)
         {
-            var cat = await _mediator.Send(new DeleteCatByIdCommand(id));
-            if (cat != null)
-            {
-                return Ok($"Cat with Id {id} has been successfully deleted.");
-            }
-            return NotFound();
+            var command = new DeleteCatByIdCommand(Id);
+            var result = await _mediator.Send(command);
 
+            if (result != null)
+            {
+                return NoContent();
+            }
+
+            return NotFound("Cat not found in the list");
         }
+
     }
 
 }

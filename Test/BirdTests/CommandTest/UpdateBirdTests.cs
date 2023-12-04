@@ -2,16 +2,11 @@
 using Application.Dtos;
 using Domain.Models;
 using Infrastructure.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Test.BirdTests.CommandTest
+namespace Test.ApplicationTests.BirdTests.CommandHandlers
 {
     [TestFixture]
-    public class UpdateBirdTests
+    public class UpdateBirdByIdCommandHandlerTests
     {
         private UpdateBirdByIdCommandHandler _handler;
         private MockDatabase _mockDatabase;
@@ -30,16 +25,18 @@ namespace Test.BirdTests.CommandTest
             var initialBird = new Bird { Id = Guid.NewGuid(), Name = "InitialBirdName", CanFly = true };
             _mockDatabase.Birds.Add(initialBird);
 
-            // Skapa en instans av UpdateBird
-            var command = new UpdateBirdByIdCommand(updatedBird: new BirdDto { Name = "UpdatedBirdName" }, id: initialBird.Id, canFly: false);
+            var command = new UpdateBirdByIdCommand(
+                updatedBird: new BirdDto { Name = "UpdatedBirdName", CanFly = false },
+                id: initialBird.Id
+            );
 
             // Act
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.IsInstanceOf<Bird>(result);
-
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.InstanceOf<Bird>());
+            Assert.That(result.Name, Is.EqualTo("UpdatedBirdName"));
         }
     }
 }

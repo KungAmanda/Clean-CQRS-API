@@ -52,20 +52,25 @@ namespace API.Controllers.BirdsController
         [Route("updateBird/{updateBirdId}")]
         public async Task<IActionResult> UpdateBird([FromBody] BirdDto updatedBird, Guid updateBirdId)
         {
-            return Ok(await _mediator.Send(new UpdateBirdByIdCommand(updatedBird, updateBirdId, updatedBird.CanFly)));
+            return Ok(await _mediator.Send(new UpdateBirdByIdCommand(updatedBird, updateBirdId)));
         }
 
 
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBirdById(Guid id)
+        [HttpDelete]
+        [Route("deletebird/{Id}")]
+        public async Task<IActionResult> DeleteBird(Guid Id)
         {
-            var bird = await _mediator.Send(new DeleteBirdByIdCommand(id));
-            if (bird != null)
+            var command = new DeleteBirdByIdCommand(Id);
+            var result = await _mediator.Send(command);
+
+            if (result != null)
             {
-                return Ok($"Bird with Id {id} has been successfully deleted.");
+                return NoContent();
             }
-            return NotFound();
+
+            return NotFound("Bird not found in the list");
         }
+
     }
 }
