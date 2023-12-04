@@ -1,54 +1,34 @@
-﻿using API.Controllers.CatsController;
-using Application.Commands.Cats.DeleteCat;
-using Domain.Models;
+﻿using Application.Commands.Cats.DeleteCat;
 using Infrastructure.Database;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Test.CatTests.CommandTest
 {
     [TestFixture]
-    public class DeleteCatByIdTests
+    public class DeleteCatByIdTest
     {
-
+        private DeleteCatByIdCommandHandler _handler;
         private MockDatabase _mockDatabase;
-        private CatsController _controller;
-        private Mock<IMediator> _mediatorMock;
 
         [SetUp]
-        public void SetUp()
+        public void Setup()
         {
-
-            _mediatorMock = new Mock<IMediator>();
-
-            // Konfigurera IMediator att returnera null när DeleteDogCommand skickas
-            _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteCatByIdCommand>(), default(CancellationToken)))
-             .Returns(Task.FromResult((Cat)null));
-            // Initialize the handler and mock database before each test
             _mockDatabase = new MockDatabase();
-            _controller = new CatsController(_mediatorMock.Object);
-
+            _handler = new DeleteCatByIdCommandHandler(_mockDatabase);
         }
-
 
         [Test]
-        public async Task DeleteDog_ShouldReturnNotFoundWhenDogIsDeleted()
+        public async Task DeleteCatById_ShouldRemoveCatIfExistingCatIsDeleted()
         {
-            //Arrange
-            var catId = new Guid("12345678-1234-5678-1234-567812345678");
+            // Arrange
+            var existingCatId = new Guid("87654321-4321-8765-4321-876543210987");
+            var deleteCommand = new DeleteCatByIdCommand(existingCatId);
 
-            //Act
-            var result = await _controller.DeleteCatById(catId);
+            // Act
+            var result = await _handler.Handle(deleteCommand, new CancellationToken());
 
-            //Assert
-            Assert.IsInstanceOf<NotFoundResult>(result);
+            // Assert
+            var catExistsAfterDeletion = _mockDatabase.Cats.Any(c => c.Id == existingCatId);
+            Assert.IsFalse(catExistsAfterDeletion, "Cat should be deleted from the database");
         }
-
     }
 }

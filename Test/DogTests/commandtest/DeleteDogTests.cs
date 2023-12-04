@@ -1,58 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application.Commands.Dogs.DeleteDog;
 using Infrastructure.Database;
-using Application.Queries.Dogs.GetById;
-using Infrastructure.Database;
-using System.Reflection.Metadata;
-using API.Controllers.DogsController;
-using Application.Commands.Dogs.DeleteDog;
-using Microsoft.AspNetCore.Mvc;
-using MediatR;
-using Domain.Models;
-using Moq;
+
 
 namespace Test.DogTests.CommandTest
 {
     [TestFixture]
-    public class DeleteDogTests
+    public class DeleteDogByIdTest
     {
-
+        private DeleteDogByIdCommandHandler _handler;
         private MockDatabase _mockDatabase;
-        private DogsController _controller;
-        private Mock<IMediator> _mediatorMock;
 
         [SetUp]
-        public void SetUp()
+        public void Setup()
         {
-
-            _mediatorMock = new Mock<IMediator>();
-
-            // Konfigurera IMediator att returnera null när DeleteDogCommand skickas
-            _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteDogCommand>(), default(CancellationToken)))
-             .Returns(Task.FromResult((Dog)null));
-            // Initialize the handler and mock database before each test
             _mockDatabase = new MockDatabase();
-            _controller = new DogsController(_mediatorMock.Object);
-
+            _handler = new DeleteDogByIdCommandHandler(_mockDatabase);
         }
 
-
         [Test]
-        public async Task DeleteDog_ShouldReturnNotFoundWhenDogIsDeleted()
+        public async Task DeleteDogById_ShouldRemoveDogIfExistingDogIsDeleted()
         {
-            //Arrange
-            var dogId = new Guid("12345678-1234-5678-1234-567812345678");
+            // Arrange
+            var existingDogId = new Guid("87654321-4321-8765-4321-876543210987");
+            var deleteCommand = new DeleteDogByIdCommand(existingDogId);
 
-            //Act
-            var result = await _controller.DeleteDog(dogId);
+            // Act
+            var result = await _handler.Handle(deleteCommand, new CancellationToken());
 
-            //Assert
-            Assert.IsInstanceOf<NotFoundResult>(result);
+            // Assert
+            var dogExistsAfterDeletion = _mockDatabase.Dogs.Any(d => d.Id == existingDogId);
+            Assert.IsFalse(dogExistsAfterDeletion, "Dog should be deleted from the database");
+
+
         }
 
     }
-
 }

@@ -58,16 +58,19 @@ namespace API.Controllers.DogsController
 
 
 
-        [HttpDelete("{id}")]
-
-        public async Task<IActionResult> DeleteDog(Guid id)
+        [HttpDelete]
+        [Route("deletedog/{Id}")]
+        public async Task<IActionResult> DeleteDog(Guid Id)
         {
-            var cat = await _mediator.Send(new DeleteDogCommand(id));
-            if (cat != null)
+            var command = new DeleteDogByIdCommand(Id);
+            var result = await _mediator.Send(command);
+
+            if (result != null)
             {
-                return Ok($"Dog with Id {id} has been successfully deleted.");
+                return NoContent();
             }
-            return NotFound();
+
+            return NotFound("Dog Finns inte med i listan");
 
         }
     }

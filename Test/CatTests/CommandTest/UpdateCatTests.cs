@@ -2,16 +2,11 @@
 using Application.Dtos;
 using Domain.Models;
 using Infrastructure.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Test.CatTests.CommandTest
+namespace Test.ApplicationTests.CatTests.CommandHandlers
 {
     [TestFixture]
-    public class UpdateCatTests
+    public class UpdateCatByIdCommandHandlerTests
     {
         private UpdateCatByIdCommandHandler _handler;
         private MockDatabase _mockDatabase;
@@ -23,26 +18,25 @@ namespace Test.CatTests.CommandTest
             _handler = new UpdateCatByIdCommandHandler(_mockDatabase);
         }
 
-
         [Test]
         public async Task Handle_UpdatesCatInDatabase()
         {
             // Arrange
-            var initialCat = new Cat { Id = Guid.NewGuid(), Name = "InitialCatName" };
+            var initialCat = new Cat { Id = Guid.NewGuid(), Name = "InitialCatName", LikesToPlay = true };
             _mockDatabase.Cats.Add(initialCat);
 
-            // Skapa en instans av UpdateCat
-            var command = new UpdateCatByIdCommand(updatedCat: new CatDto { Name = "UpdatedCatName" }, id: initialCat.Id, likesToPlay: true);
+            var command = new UpdateCatByIdCommand(
+                updatedCat: new CatDto { Name = "UpdatedCatName", LikesToPlay = false },
+                id: initialCat.Id
+            );
 
             // Act
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.IsInstanceOf<Cat>(result);
-
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.InstanceOf<Cat>());
+            Assert.That(result.Name, Is.EqualTo("UpdatedCatName"));
         }
-
-
     }
 }

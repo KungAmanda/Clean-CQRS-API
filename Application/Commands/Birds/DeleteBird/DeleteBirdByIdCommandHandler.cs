@@ -1,9 +1,6 @@
 ﻿using Domain.Models;
 using Infrastructure.Database;
 using MediatR;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Application.Commands.Birds.DeleteBird
 {
@@ -11,19 +8,24 @@ namespace Application.Commands.Birds.DeleteBird
     {
         private readonly MockDatabase _mockDatabase;
 
-        public DeleteBirdByIdCommandHandler(MockDatabase mockDatabase)
+        public DeleteBirdByIdCommandHandler(MockDatabase mockdatabase)
         {
-            _mockDatabase = mockDatabase;
+            _mockDatabase = mockdatabase;
         }
 
         public Task<Bird> Handle(DeleteBirdByIdCommand request, CancellationToken cancellationToken)
         {
-            // Hitta fågeln att ta bort från databasen
+
             var birdToDelete = _mockDatabase.Birds.FirstOrDefault(bird => bird.Id == request.Id);
 
             if (birdToDelete != null)
             {
                 _mockDatabase.Birds.Remove(birdToDelete);
+            }
+            else
+            {
+
+                throw new InvalidOperationException("No bird with the given ID was found.");
             }
 
             return Task.FromResult(birdToDelete);

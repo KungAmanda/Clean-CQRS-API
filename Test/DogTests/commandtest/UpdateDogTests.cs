@@ -2,11 +2,6 @@
 using Application.Dtos;
 using Domain.Models;
 using Infrastructure.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Test.DogTests.CommandTest
 {
@@ -31,10 +26,7 @@ namespace Test.DogTests.CommandTest
             _mockDatabase.Dogs.Add(initialDog);
 
             //skapar en instans av updatedog
-            var command = new UpdateDogByIdCommand(
-                updatedDog: new DogDto { Name = "UpdatedDogName" },
-                id: initialDog.Id
-            );
+            var command = new UpdateDogByIdCommand(updatedDog: new DogDto { Name = "UpdatedDogName" }, id: initialDog.Id);
 
             // Act
             var result = await _handler.Handle(command, CancellationToken.None);
