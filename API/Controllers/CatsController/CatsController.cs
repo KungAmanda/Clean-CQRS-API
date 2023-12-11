@@ -9,6 +9,7 @@ using Application.Queries.Cats.GetAll;
 using Application.Queries.Cats.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,6 +17,7 @@ namespace API.Controllers.CatsController
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CatsController : ControllerBase
     {
         internal readonly IMediator _mediator;
