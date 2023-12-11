@@ -6,6 +6,7 @@ using Application.Dtos;
 using Application.Queries.Birds.GetAll;
 using Application.Queries.Birds.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace API.Controllers.BirdsController
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BirdsController : ControllerBase
     {
         internal readonly IMediator _mediator;
