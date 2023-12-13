@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(RealDatabase))]
-    partial class RealDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20231213211435_jagGlum")]
+    partial class jagGlum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,13 +42,13 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("60a7829b-ba8a-42d3-8690-493abb35a77f"),
+                            Id = new Guid("ed752d39-dc93-4d18-ad46-517e76cd1f97"),
                             CanFly = true,
                             Name = "TwitterGod"
                         },
                         new
                         {
-                            Id = new Guid("462a712f-1588-4320-b56a-64fcb480454a"),
+                            Id = new Guid("8d347716-86d4-4606-90b0-35047fbde10c"),
                             CanFly = false,
                             Name = "TobiasNugget"
                         });
@@ -71,13 +74,13 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("161deaf0-cb2b-498c-bfa4-a635e2ec1427"),
+                            Id = new Guid("d48e0f4a-d2b6-4a1c-8aea-1955a23231fc"),
                             LikesToPlay = true,
                             Name = "Garfield"
                         },
                         new
                         {
-                            Id = new Guid("905c0d35-2e4d-4d80-b2c6-aa73249aae77"),
+                            Id = new Guid("c70bb362-7917-41c9-9a2a-e50ac25d4854"),
                             LikesToPlay = false,
                             Name = "HorseCatDude"
                         },
@@ -143,14 +146,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("3074923a-6aeb-45ad-9f06-72ba1455e9fd"),
-                            PasswordHash = "string",
-                            Username = "Pandis"
-                        });
                 });
 #pragma warning restore 612, 618
         }

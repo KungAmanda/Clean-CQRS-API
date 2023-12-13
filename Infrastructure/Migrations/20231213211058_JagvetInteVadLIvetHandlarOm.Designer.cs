@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(RealDatabase))]
-    partial class RealDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20231213211058_JagvetInteVadLIvetHandlarOm")]
+    partial class JagvetInteVadLIvetHandlarOm
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,20 +38,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Birds");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("60a7829b-ba8a-42d3-8690-493abb35a77f"),
-                            CanFly = true,
-                            Name = "TwitterGod"
-                        },
-                        new
-                        {
-                            Id = new Guid("462a712f-1588-4320-b56a-64fcb480454a"),
-                            CanFly = false,
-                            Name = "TobiasNugget"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Models.Cat", b =>
@@ -67,26 +56,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cats");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("161deaf0-cb2b-498c-bfa4-a635e2ec1427"),
-                            LikesToPlay = true,
-                            Name = "Garfield"
-                        },
-                        new
-                        {
-                            Id = new Guid("905c0d35-2e4d-4d80-b2c6-aa73249aae77"),
-                            LikesToPlay = false,
-                            Name = "HorseCatDude"
-                        },
-                        new
-                        {
-                            Id = new Guid("12345678-1234-5678-1234-567812345675"),
-                            LikesToPlay = true,
-                            Name = "AmandatheUglyCat"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Models.Dog", b =>
@@ -102,28 +71,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Dogs");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("12345678-1234-5678-1234-567812345671"),
-                            Name = "TestDogForUnitTests1"
-                        },
-                        new
-                        {
-                            Id = new Guid("12345678-1234-5678-1234-567812345672"),
-                            Name = "TestDogForUnitTests2"
-                        },
-                        new
-                        {
-                            Id = new Guid("12345678-1234-5678-1234-567812345673"),
-                            Name = "TestDogForUnitTests3"
-                        },
-                        new
-                        {
-                            Id = new Guid("12345678-1234-5678-1234-567812345674"),
-                            Name = "TestDogForUnitTests4"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Models.User", b =>
@@ -143,14 +90,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("3074923a-6aeb-45ad-9f06-72ba1455e9fd"),
-                            PasswordHash = "string",
-                            Username = "Pandis"
-                        });
                 });
 #pragma warning restore 612, 618
         }
