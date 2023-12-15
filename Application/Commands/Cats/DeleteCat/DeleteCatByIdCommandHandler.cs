@@ -21,13 +21,17 @@ namespace Application.Commands.Cats.DeleteCat
             if (catToDelete != null)
             {
                 _realDatabase.Cats.Remove(catToDelete);
-                return Task.FromResult(catToDelete);
+
             }
             else
             {
 
                 throw new InvalidOperationException("No cat with the given ID was found.");
             }
+
+            _realDatabase.SaveChangesAsync(cancellationToken);
+
+            return Task.FromResult(catToDelete);
         }
     }
 }

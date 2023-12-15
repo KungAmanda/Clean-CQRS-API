@@ -18,6 +18,9 @@ namespace Application.Commands.Dogs.UpdateDog
 
             dogToUpdate.Name = request.UpdatedDog.Name;
 
+            _realDatabase.SaveChangesAsync(cancellationToken);
+
+
             return Task.FromResult(dogToUpdate);
         }
     }

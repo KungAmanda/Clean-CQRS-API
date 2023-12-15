@@ -39,7 +39,7 @@ namespace API.Controllers.UsersController
             return Ok(await _mediator.Send(new GetUserByIdQuery(userId)));
         }
 
-      
+
 
         // Update a specific user
         [HttpPut]

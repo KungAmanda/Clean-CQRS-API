@@ -13,12 +13,15 @@ namespace Application.Commands.Users.UpdateUser
             _realDatabase = realDatabase;
         }
 
-        public Task<User> Handle(UpdateUserByIdCommand request, CancellationToken cancellationToken) 
+        public Task<User> Handle(UpdateUserByIdCommand request, CancellationToken cancellationToken)
         {
             User userToUpdate = _realDatabase.Users.FirstOrDefault(user => user.Id == request.Id)!;
 
             userToUpdate.Username = request.UpdatedUser.Username;
             userToUpdate.PasswordHash = request.UpdatedUser.Password;
+
+
+            _realDatabase.SaveChangesAsync(cancellationToken);
 
             return Task.FromResult(userToUpdate);
 

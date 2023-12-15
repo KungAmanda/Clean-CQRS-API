@@ -20,6 +20,6 @@ namespace Application.Queries.Dogs
             return Task.FromResult(allDogsFromMockDatabase);
         }
 
-       
+
     }
 }

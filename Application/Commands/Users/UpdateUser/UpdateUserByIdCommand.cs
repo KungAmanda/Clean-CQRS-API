@@ -6,8 +6,8 @@ namespace Application.Commands.Users.UpdateUser
 {
     public class UpdateUserByIdCommand : IRequest<User>
     {
-        public UpdateUserByIdCommand(UserDto updatedUser, Guid id) 
-        { 
+        public UpdateUserByIdCommand(UserDto updatedUser, Guid id)
+        {
             UpdatedUser = updatedUser;
             Id = id;
         }

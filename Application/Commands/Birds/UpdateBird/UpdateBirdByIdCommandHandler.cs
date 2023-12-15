@@ -21,6 +21,9 @@ namespace Application.Commands.Birds.UpdateBird
             birdToUpdate.Name = request.UpdatedBird.Name;
             birdToUpdate.CanFly = request.UpdatedBird.CanFly;
 
+            _realDatabase.SaveChangesAsync(cancellationToken);
+
+
             return Task.FromResult(birdToUpdate);
         }
     }

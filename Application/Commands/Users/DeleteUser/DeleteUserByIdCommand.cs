@@ -5,7 +5,7 @@ namespace Application.Commands.Users.DeleteUser
 {
     public class DeleteUserByIdCommand : IRequest<User>
     {
-        public DeleteUserByIdCommand(Guid id) 
+        public DeleteUserByIdCommand(Guid id)
         {
             Id = id;
         }

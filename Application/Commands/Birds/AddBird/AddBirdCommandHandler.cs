@@ -21,6 +21,7 @@ namespace Application.Commands.Birds.AddBird
             };
 
             _realDatabase.Birds.Add(birdToCreate);
+            _realDatabase.SaveChangesAsync(cancellationToken);
 
             return Task.FromResult(birdToCreate);
         }

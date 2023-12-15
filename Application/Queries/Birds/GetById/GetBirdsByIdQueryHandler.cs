@@ -22,6 +22,9 @@ namespace Application.Queries.Birds.GetById
         public Task<Bird> Handle(GetBirdByIdQuery request, CancellationToken cancellationToken)
         {
             Bird wantedBird = _realDatabase.Birds.FirstOrDefault(bird => bird.Id == request.Id)!;
+
+            _realDatabase.SaveChangesAsync(cancellationToken);
+
             return Task.FromResult(wantedBird);
         }
     }

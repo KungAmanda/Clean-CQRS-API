@@ -28,7 +28,7 @@ namespace Application.Commands.Dogs.DeleteDog
                 throw new InvalidOperationException("No dog with the given ID was found.");
             }
 
-
+            _realDatabase.SaveChangesAsync(cancellationToken);
             return Task.FromResult(dogToDelete);
 
         }

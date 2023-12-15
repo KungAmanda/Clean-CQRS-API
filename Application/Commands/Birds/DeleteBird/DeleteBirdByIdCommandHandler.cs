@@ -28,6 +28,8 @@ namespace Application.Commands.Birds.DeleteBird
                 throw new InvalidOperationException("No bird with the given ID was found.");
             }
 
+            _realDatabase.SaveChangesAsync(cancellationToken);
+
             return Task.FromResult(birdToDelete);
         }
     }

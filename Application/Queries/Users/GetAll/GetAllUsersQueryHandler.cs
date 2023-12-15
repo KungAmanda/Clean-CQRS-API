@@ -13,7 +13,7 @@ namespace Application.Queries.Users.GetAll
     {
         private readonly RealDatabase _realDatabase;
 
-        public GetAllUsersQueryHandler(RealDatabase realDatabase) 
+        public GetAllUsersQueryHandler(RealDatabase realDatabase)
         {
             _realDatabase = realDatabase;
         }

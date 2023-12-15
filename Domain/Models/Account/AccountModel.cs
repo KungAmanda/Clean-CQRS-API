@@ -15,6 +15,6 @@ namespace Domain.Models.Account
 
         public string PasswordHash { get; set; } = string.Empty;
 
-      
+
     }
 }

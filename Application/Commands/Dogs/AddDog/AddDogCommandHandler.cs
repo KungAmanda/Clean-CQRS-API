@@ -23,6 +23,8 @@ namespace Application.Commands.Dogs
             };
 
             _realDatabase.Dogs.Add(dogToCreate);
+            _realDatabase.SaveChangesAsync(cancellationToken);
+
 
             return Task.FromResult(dogToCreate);
         }

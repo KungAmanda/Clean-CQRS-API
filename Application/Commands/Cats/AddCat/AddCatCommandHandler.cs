@@ -23,7 +23,11 @@ namespace Application.Commands.Cats.AddCat
                 Name = request.NewCat.Name
             };
 
+
+
             _realDatabase.Cats.Add(catToCreate);
+            _realDatabase.SaveChangesAsync(cancellationToken);
+
 
             return Task.FromResult(catToCreate);
         }
