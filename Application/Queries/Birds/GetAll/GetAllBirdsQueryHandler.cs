@@ -22,6 +22,7 @@ namespace Application.Queries.Birds.GetAll
         public Task<List<Bird>> Handle(GetAllBirdsQuery request, CancellationToken cancellationToken)
         {
             List<Bird> allBirdsFromMockDatabase = _realDatabase.Birds.ToList();
+            _realDatabase.SaveChangesAsync(cancellationToken);
             return Task.FromResult(allBirdsFromMockDatabase);
         }
     }

@@ -21,6 +21,7 @@ namespace Application.Queries.Users.GetAll
         public Task<List<User>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
             List<User> allUsersFromRealDatabase = _realDatabase.Users.ToList();
+            _realDatabase.SaveChangesAsync(cancellationToken);
             return Task.FromResult(allUsersFromRealDatabase);
         }
     }

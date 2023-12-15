@@ -20,6 +20,8 @@ namespace Application.Queries.Users.GetById
         public Task<User> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
             User wantedUser = _realDatabase.Users.FirstOrDefault(user => user.Id == request.Id)!;
+
+            _realDatabase.SaveChangesAsync(cancellationToken);
             return Task.FromResult(wantedUser);
         }
     }

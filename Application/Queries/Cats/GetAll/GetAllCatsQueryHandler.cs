@@ -20,6 +20,7 @@ namespace Application.Queries.Cats.GetAll
         public Task<List<Cat>> Handle(GetAllCatsQuery request, CancellationToken cancellationToken)
         {
             List<Cat> allCatsFromMockDatabase = _realDatabase.Cats.ToList();
+            _realDatabase.SaveChangesAsync(cancellationToken);
             return Task.FromResult(allCatsFromMockDatabase);
         }
     }
