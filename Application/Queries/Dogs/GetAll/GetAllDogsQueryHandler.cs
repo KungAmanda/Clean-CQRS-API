@@ -8,21 +8,19 @@ namespace Application.Queries.Dogs
 {
     public class GetAllDogsQueryHandler : IRequestHandler<GetAllDogsQuery, List<Dog>>
     {
-        private readonly MockDatabase _mockDatabase;
+        private readonly RealDatabase _realDatabase;
 
-        public GetAllDogsQueryHandler(MockDatabase mockDatabase)
+        public GetAllDogsQueryHandler(RealDatabase realDatabase)
         {
-            _mockDatabase = mockDatabase;
+            _realDatabase = realDatabase;
         }
         public Task<List<Dog>> Handle(GetAllDogsQuery request, CancellationToken cancellationToken)
         {
-            List<Dog> allDogsFromMockDatabase = _mockDatabase.Dogs;
+            List<Dog> allDogsFromMockDatabase = _realDatabase.Dogs.ToList();
+            _realDatabase.SaveChangesAsync(cancellationToken);
             return Task.FromResult(allDogsFromMockDatabase);
         }
 
-        //public static implicit operator GetAllDogsQueryHandler(GetDogByIdQueryHandler v)
-        //{
-        //    throw new NotImplementedException();
-        //}
+
     }
 }

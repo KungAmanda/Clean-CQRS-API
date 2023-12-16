@@ -30,7 +30,7 @@ namespace API.Controllers
         [HttpPost("register")]
         public ActionResult<User> Register(UserDto request)
         {
-            // Hashes the password using BCrypt for security.
+            // Hashes the password using BCrypt 
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
             // Sets the username and password hash for the user.

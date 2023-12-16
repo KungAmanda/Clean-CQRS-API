@@ -6,21 +6,21 @@ namespace Application.Commands.Dogs.DeleteDog
 {
     public class DeleteDogByIdCommandHandler : IRequestHandler<DeleteDogByIdCommand, Dog>
     {
-        private readonly MockDatabase _mockDatabase;
+        private readonly RealDatabase _realDatabase;
 
-        public DeleteDogByIdCommandHandler(MockDatabase mockdatabase)
+        public DeleteDogByIdCommandHandler(RealDatabase realDatabase)
         {
-            _mockDatabase = mockdatabase;
+            _realDatabase = realDatabase;
         }
 
         public Task<Dog> Handle(DeleteDogByIdCommand request, CancellationToken cancellationToken)
         {
 
-            var dogToDelete = _mockDatabase.Dogs.FirstOrDefault(dog => dog.Id == request.Id);
+            var dogToDelete = _realDatabase.Dogs.FirstOrDefault(dog => dog.Id == request.Id);
 
             if (dogToDelete != null)
             {
-                _mockDatabase.Dogs.Remove(dogToDelete);
+                _realDatabase.Dogs.Remove(dogToDelete);
             }
             else
             {
@@ -28,7 +28,7 @@ namespace Application.Commands.Dogs.DeleteDog
                 throw new InvalidOperationException("No dog with the given ID was found.");
             }
 
-
+            _realDatabase.SaveChangesAsync(cancellationToken);
             return Task.FromResult(dogToDelete);
 
         }

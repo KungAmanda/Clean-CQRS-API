@@ -14,6 +14,8 @@ namespace Infrastructure.Database
 
         public virtual DbSet<Bird> Birds { get; set; }
 
+        public virtual DbSet<User> Users { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=Simon123!;database=RealDB",
@@ -25,7 +27,7 @@ namespace Infrastructure.Database
             base.OnModelCreating(modelBuilder);
 
             // Call the SeedData method from the external class
-            //DatabaseSeedHelper.SeedData(modelBuilder);
+            DatabaseSeedHelper.SeedData(modelBuilder);
         }
     }
 

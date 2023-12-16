@@ -15,7 +15,7 @@ namespace API.Controllers.DogsController
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //HEj
     public class DogsController : ControllerBase
     {
         internal readonly IMediator _mediator;
