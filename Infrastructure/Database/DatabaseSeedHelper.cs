@@ -36,7 +36,8 @@ namespace Infrastructure.Database
             modelBuilder.Entity<Bird>().HasData(
 
                 new Bird { Id = Guid.NewGuid(), Name = "tweetie", CanFly = true },
-                new Bird { Id = Guid.NewGuid(), Name = "chickennugget", CanFly = false }
+                new Bird { Id = Guid.NewGuid(), Name = "chickennugget", CanFly = false },
+                 new Bird { Id = Guid.NewGuid(), Name = "fågeljävel", CanFly = true }
 
                 );
 

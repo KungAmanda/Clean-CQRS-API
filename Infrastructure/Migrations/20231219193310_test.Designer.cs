@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(RealDatabase))]
-    partial class RealDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20231219193310_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,19 +42,19 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ff2d97f2-7160-4af8-8027-6d45a77fd798"),
+                            Id = new Guid("8eed2d62-1206-4a5a-ac8f-a3ffeba69884"),
                             CanFly = true,
                             Name = "tweetie"
                         },
                         new
                         {
-                            Id = new Guid("5f3a598b-486d-421a-9a7d-c9cbb3ef3e3e"),
+                            Id = new Guid("5f289850-2677-4700-af27-6445fd759e20"),
                             CanFly = false,
                             Name = "chickennugget"
                         },
                         new
                         {
-                            Id = new Guid("43654464-76d7-409b-a984-b0b5db9fae68"),
+                            Id = new Guid("eab8181c-bf8d-496c-9e2b-ba787e5c6295"),
                             CanFly = true,
                             Name = "fågeljävel"
                         });
@@ -77,13 +80,13 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("aa0f2c6c-de30-4ee6-afc7-4b74b84bcc3e"),
+                            Id = new Guid("8f16ebcd-003c-4b77-84bd-dc2248dc31c0"),
                             LikesToPlay = true,
                             Name = "Pandis"
                         },
                         new
                         {
-                            Id = new Guid("0eafac88-43d8-485e-ac8e-e5e6dcf00a37"),
+                            Id = new Guid("3eb5a139-68ff-413c-a197-dd8ba7c56dfe"),
                             LikesToPlay = false,
                             Name = "MjauMjau"
                         },
@@ -112,17 +115,17 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c3210efb-3b21-4258-beba-aea8563de39c"),
+                            Id = new Guid("eb89e165-ad9a-4798-bc38-66c2ef817606"),
                             Name = "Björn"
                         },
                         new
                         {
-                            Id = new Guid("183fcd34-4b62-4710-b7e6-95018c082709"),
+                            Id = new Guid("528fdd12-592a-4557-a3be-6f6123ea13f1"),
                             Name = "Patrik"
                         },
                         new
                         {
-                            Id = new Guid("485f4e5a-d3b2-4a55-8e60-9bbeabe03278"),
+                            Id = new Guid("5c1ecb60-ad34-4838-973c-f85cc67e56c4"),
                             Name = "Alfred"
                         },
                         new
@@ -158,7 +161,7 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("fc2b0674-9860-4b1e-9198-2e551f38f899"),
+                            Id = new Guid("515ea634-a3ee-4996-86bb-aacdbceae5b9"),
                             PasswordHash = "string",
                             Username = "Pandis"
                         });
