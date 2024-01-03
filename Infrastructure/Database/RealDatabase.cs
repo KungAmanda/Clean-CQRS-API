@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Domain.Models.Animal;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database
@@ -8,13 +9,17 @@ namespace Infrastructure.Database
         public RealDatabase() { }
         public RealDatabase(DbContextOptions<RealDatabase> options) : base(options) { }
 
-        public virtual DbSet<Dog> Dogs { get; set; }
+        public  DbSet<Dog> Dogs { get; set; }
 
-        public virtual DbSet<Cat> Cats { get; set; }
+        public  DbSet<Cat> Cats { get; set; }
 
-        public virtual DbSet<Bird> Birds { get; set; }
+        public  DbSet<Bird> Birds { get; set; }
 
-        public virtual DbSet<User> Users { get; set; }
+        public  DbSet<User> Users { get; set; }
+        public DbSet<UserAnimalModel> UserAnimals { get; set; }
+        public DbSet<AnimalModel> Animals { get; set; }
+
+    
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

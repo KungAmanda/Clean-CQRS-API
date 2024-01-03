@@ -4,10 +4,10 @@ namespace Domain.Models
 {
     public class Dog : AnimalModel
     {
-        public string Bark()
-        {
-            return "This animal barks";
-        }
+        //public string Bark()
+        //{
+        //    return "This animal barks";
+        //}
 
         public required int Weight { get; set; }
 
