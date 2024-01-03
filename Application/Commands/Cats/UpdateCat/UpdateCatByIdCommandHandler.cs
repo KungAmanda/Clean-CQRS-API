@@ -23,6 +23,8 @@ namespace Application.Commands.Cats.UpdateCat
 
             catToUpdate.Name = request.UpdatedCat.Name;
             catToUpdate.LikesToPlay = request.UpdatedCat.LikesToPlay;
+            catToUpdate.Breed = request.UpdatedCat.Breed;
+            catToUpdate.Weight = request.UpdatedCat.Weight;
 
 
             _realDatabase.SaveChangesAsync(cancellationToken);

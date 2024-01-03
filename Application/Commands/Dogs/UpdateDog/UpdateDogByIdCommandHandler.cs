@@ -17,6 +17,8 @@ namespace Application.Commands.Dogs.UpdateDog
             Dog dogToUpdate = _realDatabase.Dogs.FirstOrDefault(dog => dog.Id == request.Id)!;
 
             dogToUpdate.Name = request.UpdatedDog.Name;
+            dogToUpdate.Breed = request.UpdatedDog.Breed;
+            dogToUpdate.Weight = request.UpdatedDog.Weight;
 
             _realDatabase.SaveChangesAsync(cancellationToken);
 

@@ -20,6 +20,7 @@ namespace Application.Commands.Birds.UpdateBird
 
             birdToUpdate.Name = request.UpdatedBird.Name;
             birdToUpdate.CanFly = request.UpdatedBird.CanFly;
+            birdToUpdate.Color = request.UpdatedBird.Color;
 
             _realDatabase.SaveChangesAsync(cancellationToken);
 

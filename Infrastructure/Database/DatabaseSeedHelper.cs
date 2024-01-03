@@ -18,26 +18,26 @@ namespace Infrastructure.Database
         {
             modelBuilder.Entity<Dog>().HasData(
 
-            new Dog { Id = Guid.NewGuid(), Name = "Björn" },
-            new Dog { Id = Guid.NewGuid(), Name = "Patrik" },
-            new Dog { Id = Guid.NewGuid(), Name = "Alfred" },
-            new Dog { Id = new Guid("12345678-1234-5678-1234-567812345678"), Name = "TestDogForUnitTests" },
-            new Dog { Id = new Guid("87654321-4321-8765-4321-876543210987"), Name = "AnotherTestDogForUnitTests" }
+            new Dog { Id = Guid.NewGuid(), Name = "Björn", Breed = "shitzu", Weight = 10 },
+            new Dog { Id = Guid.NewGuid(), Name = "Patrik", Breed = "labrador", Weight = 35 },
+            new Dog { Id = Guid.NewGuid(), Name = "Alfred", Breed = "golden", Weight = 35 },
+            new Dog { Id = new Guid("12345678-1234-5678-1234-567812345678"), Name = "TestDogForUnitTests", Breed = "bulldog", Weight = 20 },
+            new Dog { Id = new Guid("87654321-4321-8765-4321-876543210987"), Name = "AnotherTestDogForUnitTests", Breed = "pitbull", Weight = 30 }
             );
 
             modelBuilder.Entity<Cat>().HasData(
 
-                new Cat { Id = Guid.NewGuid(), Name = "Pandis", LikesToPlay = true },
-                new Cat { Id = Guid.NewGuid(), Name = "MjauMjau", LikesToPlay = false },
-                new Cat { Id = new Guid("12345678-1234-5678-1234-567812345675"), Name = "Gustaf", LikesToPlay = true }
+                new Cat { Id = Guid.NewGuid(), Name = "Pandis", LikesToPlay = true, Breed = "skogskatt", Weight = 5 },
+                new Cat { Id = Guid.NewGuid(), Name = "MjauMjau", LikesToPlay = false, Breed = "Mainecoon", Weight = 10 },
+                new Cat { Id = new Guid("12345678-1234-5678-1234-567812345675"), Name = "Gustaf", LikesToPlay = true, Breed = "bengal", Weight = 5 }
 
             );
 
             modelBuilder.Entity<Bird>().HasData(
 
-                new Bird { Id = Guid.NewGuid(), Name = "tweetie", CanFly = true },
-                new Bird { Id = Guid.NewGuid(), Name = "chickennugget", CanFly = false },
-                 new Bird { Id = Guid.NewGuid(), Name = "fågeljävel", CanFly = true }
+                new Bird { Id = Guid.NewGuid(), Name = "tweetie", CanFly = true, Color = "green" },
+                new Bird { Id = Guid.NewGuid(), Name = "chickennugget", CanFly = false, Color = "purple" },
+                 new Bird { Id = Guid.NewGuid(), Name = "fågeljävel", CanFly = true, Color = "yellow" }
 
                 );
 

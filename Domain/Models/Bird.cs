@@ -10,5 +10,7 @@ namespace Domain.Models
     public class Bird : AnimalModel
     {
         public bool CanFly { get; set; }
+
+        public required string Color { get; set; }
     }
 }
