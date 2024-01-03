@@ -8,5 +8,10 @@ namespace Domain.Models
         {
             return "This animal barks";
         }
+
+        public required int Weight { get; set; }
+
+        public required string Breed { get; set; }
+
     }
 }
