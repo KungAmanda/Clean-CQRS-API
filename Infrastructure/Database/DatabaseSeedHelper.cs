@@ -48,6 +48,17 @@ namespace Infrastructure.Database
                 );
 
 
+            //modelBuilder.Entity<UserAnimalModel>().HasData(
+
+            //    new UserAnimalModel {Key = Guid.NewGuid(), AnimalId = new Guid(), UserId = new Guid() } 
+
+
+
+
+
+            //    );
+
+
 
 
 

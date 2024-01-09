@@ -20,7 +20,6 @@ namespace Infrastructure.Database
         public DbSet<AnimalModel> Animals { get; set; }
 
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=Simon123!;database=RealDB",

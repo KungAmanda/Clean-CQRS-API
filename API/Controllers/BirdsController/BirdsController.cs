@@ -4,6 +4,7 @@ using Application.Commands.Birds.DeleteBird;
 using Application.Commands.Birds.UpdateBird;
 using Application.Dtos;
 using Application.Queries.Birds.GetAll;
+using Application.Queries.Birds.GetBirdByColor;
 using Application.Queries.Birds.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -40,6 +41,18 @@ namespace API.Controllers.BirdsController
         {
             return Ok(await _mediator.Send(new GetBirdByIdQuery(birdId)));
         }
+
+        // Get birds by Color
+        [HttpGet]
+        [Route("getBirdsByColor")]
+        public async Task<IActionResult> GetBirdsByColor(string color)
+        {
+            return Ok(await _mediator.Send(new GetBirdByColorQuery
+            {
+                Color = color
+            }));
+        }
+
 
         //Create a new Bird
         [HttpPost]
