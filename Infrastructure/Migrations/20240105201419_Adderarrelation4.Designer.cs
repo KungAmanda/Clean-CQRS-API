@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(RealDatabase))]
-    partial class RealDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20240105201419_Adderarrelation4")]
+    partial class Adderarrelation4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,7 +66,7 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b8d53ff5-06e7-4e5b-97c4-30fb4a16f330"),
+                            Id = new Guid("1c01409a-8dee-4b68-81e5-0af2cc9e8b5f"),
                             PasswordHash = "string",
                             Username = "Pandis"
                         });
@@ -106,21 +109,21 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2cbe9c89-d45e-4d1b-a954-c6f3eb40da51"),
+                            Id = new Guid("5e2950f0-c1ab-417e-bc1a-d114587a1ed9"),
                             Name = "tweetie",
                             CanFly = true,
                             Color = "green"
                         },
                         new
                         {
-                            Id = new Guid("393f6c91-5496-4618-a847-a530d449c574"),
+                            Id = new Guid("e3847aaf-300f-4704-9d7e-16d95623869e"),
                             Name = "chickennugget",
                             CanFly = false,
                             Color = "purple"
                         },
                         new
                         {
-                            Id = new Guid("7d4f3521-1656-4b35-89a7-86c0f8f6bd64"),
+                            Id = new Guid("d874ba08-5d9c-4c08-b132-b77c9b03cf78"),
                             Name = "fågeljävel",
                             CanFly = true,
                             Color = "yellow"
@@ -146,7 +149,7 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1d6a6676-2526-4464-8ece-1f42d0ef0ed9"),
+                            Id = new Guid("30770188-a308-4429-a4c7-3d0781d9be7f"),
                             Name = "Pandis",
                             Breed = "skogskatt",
                             LikesToPlay = true,
@@ -154,7 +157,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3d19844b-8200-40a1-aed6-25fd68d7eed6"),
+                            Id = new Guid("9983513c-11ae-4e43-a546-9e1f4e2f9cfa"),
                             Name = "MjauMjau",
                             Breed = "Mainecoon",
                             LikesToPlay = false,
@@ -195,21 +198,21 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f1259214-fdd4-4848-8a20-a2ea0553b6a5"),
+                            Id = new Guid("d7617bbd-4c7a-443e-8f72-ccffb584de9d"),
                             Name = "Björn",
                             Breed = "shitzu",
                             Weight = 10
                         },
                         new
                         {
-                            Id = new Guid("2fb60523-71a3-4b50-bfcd-efaa4ccbb0a5"),
+                            Id = new Guid("bd03c736-4504-42cf-9ed1-442b2b16b5aa"),
                             Name = "Patrik",
                             Breed = "labrador",
                             Weight = 35
                         },
                         new
                         {
-                            Id = new Guid("9577bf8d-108a-443d-ab04-ea89aaaac682"),
+                            Id = new Guid("63b389df-a8b8-4346-9296-ec3f1f9865dc"),
                             Name = "Alfred",
                             Breed = "golden",
                             Weight = 35

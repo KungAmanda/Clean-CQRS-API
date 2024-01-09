@@ -5,6 +5,7 @@ using Application.Commands.Dogs.UpdateDog;
 using Application.Dtos;
 using Application.Queries.Dogs.GetAll;
 using Application.Queries.Dogs.GetById;
+using Application.Queries.Dogs.GetDogByWeightAndBreed;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +41,19 @@ namespace API.Controllers.DogsController
         {
             return Ok(await _mediator.Send(new GetDogByIdQuery(dogId)));
         }
+
+        // Get dogs by Weight and Breed
+        [HttpGet]
+        [Route("getDogsByWeightAndBreed")]
+        public async Task<IActionResult> GetDogsByWeightAndBreed(int? weight, string breed)
+        {
+            return Ok(await _mediator.Send(new GetDogsByWeightAndBreedQuery
+            {
+                Weight = weight,
+                Breed = breed
+            }));
+        }
+
 
         // Create a new dog 
         [HttpPost]

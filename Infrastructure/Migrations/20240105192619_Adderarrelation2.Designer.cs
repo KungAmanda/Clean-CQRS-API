@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(RealDatabase))]
-    partial class RealDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20240105192619_Adderarrelation2")]
+    partial class Adderarrelation2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,7 +66,7 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b8d53ff5-06e7-4e5b-97c4-30fb4a16f330"),
+                            Id = new Guid("a77c05d0-00b4-4580-88f7-f6d425ebebe4"),
                             PasswordHash = "string",
                             Username = "Pandis"
                         });
@@ -88,6 +91,14 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserAnimals");
+
+                    b.HasData(
+                        new
+                        {
+                            Key = new Guid("a7911894-6cea-4848-8cd5-bd74e83b569f"),
+                            AnimalId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            UserId = new Guid("00000000-0000-0000-0000-000000000000")
+                        });
                 });
 
             modelBuilder.Entity("Domain.Models.Bird", b =>
@@ -106,21 +117,21 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2cbe9c89-d45e-4d1b-a954-c6f3eb40da51"),
+                            Id = new Guid("ff40194e-6f08-4a89-b25a-19263eaa8e53"),
                             Name = "tweetie",
                             CanFly = true,
                             Color = "green"
                         },
                         new
                         {
-                            Id = new Guid("393f6c91-5496-4618-a847-a530d449c574"),
+                            Id = new Guid("59a32514-a8d5-4ce5-bcf7-1dbd9c1f6977"),
                             Name = "chickennugget",
                             CanFly = false,
                             Color = "purple"
                         },
                         new
                         {
-                            Id = new Guid("7d4f3521-1656-4b35-89a7-86c0f8f6bd64"),
+                            Id = new Guid("d57be61a-4492-4a65-bba1-81a4be581f73"),
                             Name = "fågeljävel",
                             CanFly = true,
                             Color = "yellow"
@@ -146,7 +157,7 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1d6a6676-2526-4464-8ece-1f42d0ef0ed9"),
+                            Id = new Guid("a06b9023-d241-4a3b-bac3-f60de27f920e"),
                             Name = "Pandis",
                             Breed = "skogskatt",
                             LikesToPlay = true,
@@ -154,7 +165,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3d19844b-8200-40a1-aed6-25fd68d7eed6"),
+                            Id = new Guid("604c0308-f0f3-4cf6-8720-2086adc8d508"),
                             Name = "MjauMjau",
                             Breed = "Mainecoon",
                             LikesToPlay = false,
@@ -195,21 +206,21 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f1259214-fdd4-4848-8a20-a2ea0553b6a5"),
+                            Id = new Guid("bb949627-8668-4422-a769-e68337d76648"),
                             Name = "Björn",
                             Breed = "shitzu",
                             Weight = 10
                         },
                         new
                         {
-                            Id = new Guid("2fb60523-71a3-4b50-bfcd-efaa4ccbb0a5"),
+                            Id = new Guid("ed0ed9d7-1c1c-4acc-9ed9-23ddf233f5d3"),
                             Name = "Patrik",
                             Breed = "labrador",
                             Weight = 35
                         },
                         new
                         {
-                            Id = new Guid("9577bf8d-108a-443d-ab04-ea89aaaac682"),
+                            Id = new Guid("59d1cb97-0800-47b2-82fd-7ae2a41e5f3d"),
                             Name = "Alfred",
                             Breed = "golden",
                             Weight = 35

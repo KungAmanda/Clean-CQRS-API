@@ -10,6 +10,7 @@ using Application.Queries.Cats.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Application.Queries.Cats.GetCatsByWeight_Breed;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -42,6 +43,19 @@ namespace API.Controllers.CatsController
         {
             return Ok(await _mediator.Send(new GetCatByIdQuery(catId)));
         }
+
+        // Get cats by Weight and Breed
+        [HttpGet]
+        [Route("getCatsByWeightAndBreed")]
+        public async Task<IActionResult> GetCatsByWeightAndBreed(int? weight, string breed)
+        {
+            return Ok(await _mediator.Send(new GetCatsByWeightAndBreedQuery
+            {
+                Weight = weight,
+                Breed = breed
+            }));
+        }
+
 
         //Create a new Cat
         [HttpPost]
