@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.UserAnimals.Queries.GetAllUserAnimals
 {
-    public class GetAllAnimalUsersQueryHandler : IRequestHandler<GetAllUsersWithAnimalsQuery, List<UserAnimalDto>>
+    public class GetAllAnimalUsersQueryHandler : IRequestHandler<GetAllUsersWithAnimalsQuery, List<UserAnimalModel>>
     {
         private readonly RealDatabase _realDatabase;
 
@@ -20,7 +20,7 @@ namespace Application.UserAnimals.Queries.GetAllUserAnimals
 
 
         // den hämtar bara id nu jag vill ändra så med hjälp av userid hämta namnen också
-        public async Task<List<UserAnimalDto>> Handle(GetAllUsersWithAnimalsQuery request, CancellationToken cancellationToken)
+        public async Task<List<UserAnimalModel>> Handle(GetAllUsersWithAnimalsQuery request, CancellationToken cancellationToken)
         {
             var userAnimal = await _realDatabase.UserAnimals.ToListAsync();
 
@@ -42,7 +42,7 @@ namespace Application.UserAnimals.Queries.GetAllUserAnimals
 
 
 
-            return userAnimal.Select(au => new UserAnimalDto
+            return userAnimal.Select(au => new UserAnimalModel
             {
                 AnimalId = au.AnimalId,
                 UserId = au.UserId

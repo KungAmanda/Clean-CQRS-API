@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.UserAnimals.Queries.GetAllUserAnimals
 {
-    public class GetAllUsersWithAnimalsQuery : IRequest<List<UserAnimalDto>>
+    public class GetAllUsersWithAnimalsQuery : IRequest<List<UserAnimalModel>>
     {
     }
 }

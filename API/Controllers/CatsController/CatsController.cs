@@ -11,6 +11,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Application.Queries.Cats.GetCatsByWeight_Breed;
+using Domain.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -32,8 +33,14 @@ namespace API.Controllers.CatsController
         [Route("getAllCats")]
         public async Task<IActionResult> GetAllCats()
         {
-            return Ok(await _mediator.Send(new GetAllCatsQuery()));
-            //Return Ok(Get All Cats)
+            try
+            {
+                return Ok(await _mediator.Send(new GetAllCatsQuery()));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         //Get Cat By Id
@@ -41,7 +48,14 @@ namespace API.Controllers.CatsController
         [Route("getCatById/{catId}")]
         public async Task<IActionResult> GetCatById(Guid catId)
         {
-            return Ok(await _mediator.Send(new GetCatByIdQuery(catId)));
+            try
+            {
+                return Ok(await _mediator.Send(new GetCatByIdQuery(catId)));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         // Get cats by Weight and Breed
@@ -49,11 +63,20 @@ namespace API.Controllers.CatsController
         [Route("getCatsByWeightAndBreed")]
         public async Task<IActionResult> GetCatsByWeightAndBreed(int? weight, string breed)
         {
-            return Ok(await _mediator.Send(new GetCatsByWeightAndBreedQuery
+            try
             {
-                Weight = weight,
-                Breed = breed
-            }));
+                return Ok(await _mediator.Send(new GetCatsByWeightAndBreedQuery
+                {
+                    Weight = weight,
+                    Breed = breed
+                }));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+
+
         }
 
 
@@ -62,16 +85,29 @@ namespace API.Controllers.CatsController
         [Route("addNewCat")]
         public async Task<IActionResult> AddCat([FromBody] CatDto newCat)
         {
-            return Ok(await _mediator.Send(new AddCatCommand(newCat)));
-
+            try
+            {
+                return Ok(await _mediator.Send(new AddCatCommand(newCat)));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPut]
         [Route("updateCat/{updatedCatId}")]
         public async Task<IActionResult> UpdateCat([FromBody] CatDto updatedCat, Guid updatedCatId)
         {
+            try
+            {
+                return Ok(await _mediator.Send(new UpdateCatByIdCommand(updatedCat, updatedCatId)));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
 
-            return Ok(await _mediator.Send(new UpdateCatByIdCommand(updatedCat, updatedCatId)));
         }
 
 

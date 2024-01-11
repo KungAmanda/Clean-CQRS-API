@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(RealDatabase))]
-    [Migration("20240105192619_Adderarrelation2")]
-    partial class Adderarrelation2
+    [Migration("20240111113724_test420")]
+    partial class test420
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,7 +66,7 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a77c05d0-00b4-4580-88f7-f6d425ebebe4"),
+                            Id = new Guid("6d498262-ffef-4bac-a3db-df8e328de5d5"),
                             PasswordHash = "string",
                             Username = "Pandis"
                         });
@@ -78,27 +78,27 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("AnimalId")
+                    b.Property<string>("AnimalId")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("AnimalId1")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("UserId1")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Key");
 
-                    b.HasIndex("AnimalId");
+                    b.HasIndex("AnimalId1");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("UserAnimals");
-
-                    b.HasData(
-                        new
-                        {
-                            Key = new Guid("a7911894-6cea-4848-8cd5-bd74e83b569f"),
-                            AnimalId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            UserId = new Guid("00000000-0000-0000-0000-000000000000")
-                        });
                 });
 
             modelBuilder.Entity("Domain.Models.Bird", b =>
@@ -117,21 +117,21 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ff40194e-6f08-4a89-b25a-19263eaa8e53"),
+                            Id = new Guid("5e6ba330-a313-430d-bdab-bd63f8cc89b0"),
                             Name = "tweetie",
                             CanFly = true,
                             Color = "green"
                         },
                         new
                         {
-                            Id = new Guid("59a32514-a8d5-4ce5-bcf7-1dbd9c1f6977"),
+                            Id = new Guid("63f78a4c-120a-4ec5-b57e-88075a7af69b"),
                             Name = "chickennugget",
                             CanFly = false,
                             Color = "purple"
                         },
                         new
                         {
-                            Id = new Guid("d57be61a-4492-4a65-bba1-81a4be581f73"),
+                            Id = new Guid("d242f283-b994-4213-bbab-4ba90f8b55cf"),
                             Name = "fågeljävel",
                             CanFly = true,
                             Color = "yellow"
@@ -157,7 +157,7 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a06b9023-d241-4a3b-bac3-f60de27f920e"),
+                            Id = new Guid("c8ae2e2e-a79e-40ad-ba62-813945083487"),
                             Name = "Pandis",
                             Breed = "skogskatt",
                             LikesToPlay = true,
@@ -165,7 +165,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("604c0308-f0f3-4cf6-8720-2086adc8d508"),
+                            Id = new Guid("2de0ccf1-8f2e-4352-bbd1-ce8f817b4bc1"),
                             Name = "MjauMjau",
                             Breed = "Mainecoon",
                             LikesToPlay = false,
@@ -206,21 +206,21 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bb949627-8668-4422-a769-e68337d76648"),
+                            Id = new Guid("80f96112-c483-4b29-9244-19cfa8a765d8"),
                             Name = "Björn",
                             Breed = "shitzu",
                             Weight = 10
                         },
                         new
                         {
-                            Id = new Guid("ed0ed9d7-1c1c-4acc-9ed9-23ddf233f5d3"),
+                            Id = new Guid("87967866-6b92-4316-b621-61d704fdd015"),
                             Name = "Patrik",
                             Breed = "labrador",
                             Weight = 35
                         },
                         new
                         {
-                            Id = new Guid("59d1cb97-0800-47b2-82fd-7ae2a41e5f3d"),
+                            Id = new Guid("c83f284c-1378-4b56-8ab2-cd962d471ea8"),
                             Name = "Alfred",
                             Breed = "golden",
                             Weight = 35
@@ -245,13 +245,13 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Domain.Models.Animal.AnimalModel", "Animal")
                         .WithMany("UserAnimal")
-                        .HasForeignKey("AnimalId")
+                        .HasForeignKey("AnimalId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Models.User", "User")
                         .WithMany("UserAnimal")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
