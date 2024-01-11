@@ -16,7 +16,7 @@ namespace API.Controllers.BirdsController
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+
     public class BirdsController : ControllerBase
     {
         internal readonly IMediator _mediator;
