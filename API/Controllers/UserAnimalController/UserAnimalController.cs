@@ -5,6 +5,10 @@ using Application.Dtos;
 using Application.Commands.UserAnimal.AddUserAnimal;
 using Application.Commands.UserAnimal.DeleteUserAnimal;
 using Application.Commands.UserAnimal.UpdateUserAnimal;
+using Application.Validators.UserAnimal;
+using System;
+using System.Threading.Tasks;
+
 namespace API.Controllers.UserAnimalController
 {
     [Route("api/[controller]")]
@@ -13,10 +17,12 @@ namespace API.Controllers.UserAnimalController
     public class UserAnimalController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly UserAnimalValidator _userAnimalValidator;
 
-        public UserAnimalController(IMediator mediator)
+        public UserAnimalController(IMediator mediator, UserAnimalValidator userAnimalValidator)
         {
             _mediator = mediator;
+            _userAnimalValidator = userAnimalValidator;
         }
 
         //get all satana perkele djur och ägare
@@ -32,12 +38,9 @@ namespace API.Controllers.UserAnimalController
             }
             catch (Exception)
             {
-
                 return StatusCode(500, "Internal server error");
             }
         }
-
-
 
         //Create a new useranimal relation
         [HttpPost]
@@ -46,15 +49,19 @@ namespace API.Controllers.UserAnimalController
         {
             try
             {
+                var validationResult = await _userAnimalValidator.ValidateAsync(newUserAnimal);
+
+                if (!validationResult.IsValid)
+                {
+                    return BadRequest(validationResult.Errors);
+                }
+
                 return Ok(await _mediator.Send(new AddUserAnimalCommand(newUserAnimal)));
             }
             catch (Exception)
             {
-
                 return StatusCode(500, "Internal server error");
             }
-
-
         }
 
         // delete relation 
@@ -73,15 +80,12 @@ namespace API.Controllers.UserAnimalController
                 }
 
                 return NotFound("Relation not found in the list");
-
             }
             catch (Exception)
             {
                 return StatusCode(500, "Internal server error");
-
             }
         }
-
 
         [HttpPut]
         [Route("updateUserAnimal/{key}")]
@@ -89,6 +93,13 @@ namespace API.Controllers.UserAnimalController
         {
             try
             {
+                var validationResult = await _userAnimalValidator.ValidateAsync(updateUserAnimal);
+
+                if (!validationResult.IsValid)
+                {
+                    return BadRequest(validationResult.Errors);
+                }
+
                 return Ok(await _mediator.Send(new UpdateUserAnimalByIdCommand(updateUserAnimal, key)));
             }
             catch (Exception)
@@ -96,10 +107,5 @@ namespace API.Controllers.UserAnimalController
                 return StatusCode(500, "Internal server error");
             }
         }
-
-
-
     }
 }
-
-
