@@ -3,6 +3,7 @@ using Application.Commands.Users.UpdateUser;
 using Application.Dtos;
 using Application.Queries.Users.GetAll;
 using Application.Queries.Users.GetById;
+using Application.Validators.User;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,14 +14,15 @@ namespace API.Controllers.UsersController
 {
     [Route("api/[controller]")]
     [ApiController]
-
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly UserValidator _userValidator;
 
-        public UsersController(IMediator mediator)
+        public UsersController(IMediator mediator, UserValidator userValidator)
         {
             _mediator = mediator;
+            _userValidator = userValidator;
         }
 
         // Get all users from database
@@ -39,13 +41,18 @@ namespace API.Controllers.UsersController
             return Ok(await _mediator.Send(new GetUserByIdQuery(userId)));
         }
 
-
-
         // Update a specific user
         [HttpPut]
         [Route("updateUser/{updatedUserId}")]
         public async Task<IActionResult> UpdateUser([FromBody] UserDto updatedUser, Guid updatedUserId)
         {
+            var validationResult = await _userValidator.ValidateAsync(updatedUser);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             return Ok(await _mediator.Send(new UpdateUserByIdCommand(updatedUser, updatedUserId)));
         }
 

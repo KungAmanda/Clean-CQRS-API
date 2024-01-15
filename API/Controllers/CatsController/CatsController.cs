@@ -1,34 +1,33 @@
-﻿using Application.Commands.Cats;
-using Application.Commands.Cats.AddCat;
+﻿using Application.Commands.Cats.AddCat;
 using Application.Commands.Cats.DeleteCat;
 using Application.Commands.Cats.UpdateCat;
 using Application.Dtos;
 using Application.Queries.Cats.GetAll;
 using Application.Queries.Cats.GetById;
-using Application.Queries.Cats.GetAll;
-using Application.Queries.Cats.GetById;
+using Application.Queries.Cats.GetCatsByWeight_Breed;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Application.Queries.Cats.GetCatsByWeight_Breed;
 using Domain.Models;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Application.Validators.Cat;
 
 namespace API.Controllers.CatsController
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+
     public class CatsController : ControllerBase
     {
         internal readonly IMediator _mediator;
-        public CatsController(IMediator mediator)
+        private readonly CatValidator _catValidator;
+
+        public CatsController(IMediator mediator, CatValidator catValidator)
         {
             _mediator = mediator;
+            _catValidator = catValidator;
         }
 
-        //Get all Cats from Db
+        // Get all Cats from Db
         [HttpGet]
         [Route("getAllCats")]
         public async Task<IActionResult> GetAllCats()
@@ -43,7 +42,7 @@ namespace API.Controllers.CatsController
             }
         }
 
-        //Get Cat By Id
+        // Get Cat By Id
         [HttpGet]
         [Route("getCatById/{catId}")]
         public async Task<IActionResult> GetCatById(Guid catId)
@@ -75,18 +74,21 @@ namespace API.Controllers.CatsController
             {
                 return StatusCode(500, "Internal server error");
             }
-
-
         }
 
-
-        //Create a new Cat
+        // Create a new Cat
         [HttpPost]
         [Route("addNewCat")]
         public async Task<IActionResult> AddCat([FromBody] CatDto newCat)
         {
             try
             {
+                var validationResult = await _catValidator.ValidateAsync(newCat);
+                if (!validationResult.IsValid)
+                {
+                    return BadRequest(validationResult.Errors);
+                }
+
                 return Ok(await _mediator.Send(new AddCatCommand(newCat)));
             }
             catch (Exception)
@@ -101,15 +103,19 @@ namespace API.Controllers.CatsController
         {
             try
             {
+                var validationResult = await _catValidator.ValidateAsync(updatedCat);
+                if (!validationResult.IsValid)
+                {
+                    return BadRequest(validationResult.Errors);
+                }
+
                 return Ok(await _mediator.Send(new UpdateCatByIdCommand(updatedCat, updatedCatId)));
             }
             catch (Exception)
             {
                 return StatusCode(500, "Internal server error");
             }
-
         }
-
 
         [HttpDelete]
         [Route("deletecat/{Id}")]
@@ -125,8 +131,5 @@ namespace API.Controllers.CatsController
 
             return NotFound("Cat not found in the list");
         }
-
     }
-
 }
-

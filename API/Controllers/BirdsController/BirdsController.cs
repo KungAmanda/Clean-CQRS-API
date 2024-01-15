@@ -6,6 +6,7 @@ using Application.Dtos;
 using Application.Queries.Birds.GetAll;
 using Application.Queries.Birds.GetBirdByColor;
 using Application.Queries.Birds.GetById;
+using Application.Validators.Bird;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,14 +17,15 @@ namespace API.Controllers.BirdsController
 {
     [Route("api/[controller]")]
     [ApiController]
-
     public class BirdsController : ControllerBase
     {
         internal readonly IMediator _mediator;
+        private readonly BirdValidator _birdValidator;
 
-        public BirdsController(IMediator mediator)
+        public BirdsController(IMediator mediator, BirdValidator birdValidator)
         {
             _mediator = mediator;
+            _birdValidator = birdValidator;
         }
 
         //Get all Birds from Db
@@ -53,12 +55,18 @@ namespace API.Controllers.BirdsController
             }));
         }
 
-
         //Create a new Bird
         [HttpPost]
         [Route("addNewBird")]
         public async Task<IActionResult> AddBird([FromBody] BirdDto newBird)
         {
+            var validationResult = await _birdValidator.ValidateAsync(newBird);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             return Ok(await _mediator.Send(new AddBirdCommand(newBird)));
         }
 
@@ -67,10 +75,15 @@ namespace API.Controllers.BirdsController
         [Route("updateBird/{updateBirdId}")]
         public async Task<IActionResult> UpdateBird([FromBody] BirdDto updatedBird, Guid updateBirdId)
         {
+            var validationResult = await _birdValidator.ValidateAsync(updatedBird);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             return Ok(await _mediator.Send(new UpdateBirdByIdCommand(updatedBird, updateBirdId)));
         }
-
-
 
         [HttpDelete]
         [Route("deletebird/{Id}")]
@@ -86,6 +99,5 @@ namespace API.Controllers.BirdsController
 
             return NotFound("Bird not found in the list");
         }
-
     }
 }

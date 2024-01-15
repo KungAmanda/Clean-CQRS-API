@@ -1,7 +1,9 @@
-﻿using Application.Commands.Cats.DeleteCat;
+﻿using Application.Commands.Birds.DeleteBird;
+using Application.Commands.Cats.DeleteCat;
 using Domain.Models;
 using Infrastructure.Database;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,31 +15,45 @@ namespace Application.Commands.UserAnimal.DeleteUserAnimal
     public class DeleteUserAnimalByIdCommandHandler : IRequestHandler<DeleteUserAnimalByIdCommand, UserAnimalModel>
     {
         private readonly RealDatabase _realDatabase;
+        private readonly ILogger<DeleteUserAnimalByIdCommandHandler> _logger;
 
-        public DeleteUserAnimalByIdCommandHandler(RealDatabase realDatabase)
+        public DeleteUserAnimalByIdCommandHandler(RealDatabase realDatabase, ILogger<DeleteUserAnimalByIdCommandHandler> logger)
         {
             _realDatabase = realDatabase;
+            _logger = logger;
         }
 
         public Task<UserAnimalModel> Handle(DeleteUserAnimalByIdCommand request, CancellationToken cancellationToken)
         {
-
-            var userAnimalToDelete = _realDatabase.UserAnimals.FirstOrDefault(userAnimals => userAnimals.Key == request.Key);
-
-            if (userAnimalToDelete != null)
+            try
             {
-                _realDatabase.UserAnimals.Remove(userAnimalToDelete);
+                var userAnimalToDelete = _realDatabase.UserAnimals.FirstOrDefault(userAnimals => userAnimals.Key == request.Key);
+
+                if (userAnimalToDelete != null)
+                {
+                    _realDatabase.UserAnimals.Remove(userAnimalToDelete);
+                    _realDatabase.SaveChangesAsync(cancellationToken);
+                    _logger.LogInformation("Relation deleted!", userAnimalToDelete.Key);
+
+                }
+                else
+                {
+                    _logger.LogWarning("No relation with the given key was found.");
+                    throw new InvalidOperationException("No relation with the given key was found.");
+                }
+
+
+
+                return Task.FromResult(userAnimalToDelete);
+
 
             }
-            else
+            catch (Exception ex)
             {
-
-                throw new InvalidOperationException("No relation with the given key was found.");
+                _logger.LogError(ex, "Error occurred while deleting a relation");
+                throw;
             }
 
-            _realDatabase.SaveChangesAsync(cancellationToken);
-
-            return Task.FromResult(userAnimalToDelete);
         }
     }
 }

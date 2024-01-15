@@ -1,36 +1,46 @@
 ﻿using Domain.Models;
 using Infrastructure.Database;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Commands.Birds.DeleteBird
 {
     public class DeleteBirdByIdCommandHandler : IRequestHandler<DeleteBirdByIdCommand, Bird>
     {
         private readonly RealDatabase _realDatabase;
+        private readonly ILogger<DeleteBirdByIdCommandHandler> _logger;
 
-        public DeleteBirdByIdCommandHandler(RealDatabase realDatabase)
+        public DeleteBirdByIdCommandHandler(RealDatabase realDatabase, ILogger<DeleteBirdByIdCommandHandler> logger)
         {
             _realDatabase = realDatabase;
+            _logger = logger;
         }
 
         public Task<Bird> Handle(DeleteBirdByIdCommand request, CancellationToken cancellationToken)
         {
-
-            var birdToDelete = _realDatabase.Birds.FirstOrDefault(bird => bird.Id == request.Id);
-
-            if (birdToDelete != null)
+            try
             {
-                _realDatabase.Birds.Remove(birdToDelete);
+                var birdToDelete = _realDatabase.Birds.FirstOrDefault(bird => bird.Id == request.Id);
+
+                if (birdToDelete != null)
+                {
+                    _realDatabase.Birds.Remove(birdToDelete);
+                    _realDatabase.SaveChangesAsync(cancellationToken);
+                    _logger.LogInformation("Bird deleted: {BirdId}", birdToDelete.Id);
+                }
+                else
+                {
+                    _logger.LogWarning("No bird with the given ID was found.");
+                    throw new InvalidOperationException("No bird with the given ID was found.");
+                }
+
+                return Task.FromResult(birdToDelete);
             }
-            else
+            catch (Exception ex)
             {
-
-                throw new InvalidOperationException("No bird with the given ID was found.");
+                _logger.LogError(ex, "Error occurred while deleting a bird");
+                throw;
             }
-
-            _realDatabase.SaveChangesAsync(cancellationToken);
-
-            return Task.FromResult(birdToDelete);
         }
     }
 }
